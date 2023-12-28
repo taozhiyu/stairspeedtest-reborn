@@ -16,7 +16,7 @@ if [ ! -d libev-mingw/ ]; then # assume libev-mingw will never update again
   tar xvf mingw.tar.gz
   cd libev-mingw
   mkdir build
-  ./configure --prefix="$PWD/build"
+  ./configure --prefix="$PWD/build" --with-pcre=c:/msys2
   make install -j4
   cd ..
 fi
@@ -27,7 +27,7 @@ if [ ! -d simple-obfs/ ]; then # assume simple-obfs will never update again
   cd simple-obfs
   git submodule update --init
   ./autogen.sh
-  ./configure --disable-documentation --with-ev="$LIBEV_PATH"
+  ./configure --disable-documentation --with-ev="$LIBEV_PATH" --with-pcre=c:/msys2
   make -j4
 else
   cd simple-obfs
@@ -43,7 +43,7 @@ if [ ! -d shadowsocks-libev/ ]; then
   git reset --hard c2fc967
   git submodule update --init
   ./autogen.sh
-  ./configure --disable-documentation --with-ev="$LIBEV_PATH"
+  ./configure --disable-documentation --with-ev="$LIBEV_PATH" --with-pcre=c:/msys2
 else
   cd shadowsocks-libev
   # reset fix to avoid fast-forward conflict
@@ -69,12 +69,12 @@ if [ ! -d shadowsocksr-libev/ ]; then # assume shadowsocksr-libev will never upd
   # build ahead to reconfigure
   cd libudns
   ./autogen.sh
-  ./configure
+  ./configure --with-pcre=c:/msys2
   make -j4
   cd ..
 
   ./autogen.sh
-  CFLAGS+="-fstack-protector" ./configure --disable-documentation --with-ev="$LIBEV_PATH"
+  CFLAGS+="-fstack-protector" ./configure --disable-documentation --with-ev="$LIBEV_PATH" --with-pcre=c:/msys2
 
   # fix codes
   sed -i "s/^const/extern const/g" src/tls.h
